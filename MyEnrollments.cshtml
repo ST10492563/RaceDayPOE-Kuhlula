@@ -1,0 +1,55 @@
+﻿@model List<RaceDayMvc.Models.EnrollmentViewModel>
+
+@{
+    ViewData["Title"] = "My Enrollments";
+}
+
+<h2>My Enrollments</h2>
+
+@if (ViewBag.IsDemo == true)
+{
+    <div class="alert alert-warning">
+        <strong>Demonstration data:</strong>
+        These sample enrolments are displayed to demonstrate the page.
+        They are not saved in the database.
+    </div>
+}
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info">
+        You have no enrolments yet.
+    </div>
+}
+else
+{
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Enrollment ID</th>
+                <th>Event ID</th>
+                <th>Category ID</th>
+                <th>Race Number</th>
+                <th>Enrollment Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var enrollment in Model)
+            {
+                <tr>
+                    <td>@enrollment.EnrollmentID</td>
+                    <td>@enrollment.EventID</td>
+                    <td>@enrollment.CategoryID</td>
+                    <td>@enrollment.RaceNumber</td>
+                    <td>@enrollment.EnrollmentDate.ToString("dd MMM yyyy")</td>
+                    <td>
+                        <span class="badge bg-success">
+                            @enrollment.Status
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

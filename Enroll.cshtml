@@ -1,0 +1,74 @@
+﻿@model RaceDayMvc.Models.EventViewModel
+
+@{
+    ViewData["Title"] = "Enrol in Event";
+    var categories = ViewBag.Categories as
+        List<RaceDayMvc.Models.CategoryViewModel>
+        ?? new List<RaceDayMvc.Models.CategoryViewModel>();
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h2>Enrol in @Model.EventName</h2>
+
+            <p>@Model.Description</p>
+
+            <p>
+                <strong>Event date:</strong>
+                @Model.EventDate.ToString("dd MMM yyyy")
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                @Model.Location
+            </p>
+
+            <p>
+                <strong>Entry fee:</strong>
+                R @Model.EntryFee.ToString("N2")
+            </p>
+
+            <hr />
+
+            <form asp-action="Enroll" method="post">
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       name="eventId"
+                       value="@Model.EventID" />
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Select Event Category
+                    </label>
+
+                    <select name="categoryId"
+                            class="form-select"
+                            required>
+                        <option value="">Choose category</option>
+
+                        @foreach (var category in categories)
+                        {
+                            <option value="@category.CategoryID">
+                                @category.CategoryName
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <button type="submit"
+                        class="btn btn-success">
+                    Confirm Enrolment
+                </button>
+
+                <a asp-controller="Events"
+                   asp-action="Details"
+                   asp-route-id="@Model.EventID"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

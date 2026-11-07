@@ -1,0 +1,122 @@
+﻿@model IEnumerable<RaceDayMvc.Models.EventViewModel>
+
+@{
+    ViewData["Title"] = "Organiser Dashboard";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Organiser Dashboard</h2>
+            <p class="text-muted">
+                Manage your RaceDay sporting events.
+            </p>
+        </div>
+
+        <a asp-controller="Events"
+           asp-action="Create"
+           class="btn btn-success">
+            Create New Event
+        </a>
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Events</h6>
+                    <h2>@Model.Count()</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Upcoming Events</h6>
+                    <h2>
+                        @Model.Count(e => e.Status == "Upcoming")
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Completed Events</h6>
+                    <h2>
+                        @Model.Count(e => e.Status == "Completed")
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h5>Manage Events</h5>
+
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info">
+                    No events have been created yet.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.EventName</td>
+
+                                    <td>
+                                        @item.EventDate.ToString("dd MMM yyyy")
+                                    </td>
+
+                                    <td>@item.Location</td>
+
+                                    <td>@item.Status</td>
+
+                                    <td>
+                                        <a asp-controller="Events"
+                                           asp-action="Edit"
+                                           asp-route-id="@item.EventID"
+                                           class="btn btn-warning btn-sm">
+                                            Edit
+                                        </a>
+
+                                        <a asp-controller="Events"
+                                           asp-action="Details"
+                                           asp-route-id="@item.EventID"
+                                           class="btn btn-primary btn-sm">
+                                            View
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+﻿@model RaceDayMvc.Models.EventViewModel
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<div class="card shadow-sm">
+    <div class="card-body p-4">
+        <h2>@Model.EventName</h2>
+
+        <span class="badge bg-success mb-3">
+            @Model.Status
+        </span>
+
+        <p class="lead">@Model.Description</p>
+
+        <hr />
+
+        <p>
+            <strong>Event date:</strong>
+            @Model.EventDate.ToString("dd MMMM yyyy")
+        </p>
+
+        <p><strong>Start time:</strong> @Model.StartTime</p>
+
+        <p>
+            <strong>Location:</strong>
+            @Model.Location, @Model.Province
+        </p>
+
+        <p>
+            <strong>Entry fee:</strong>
+            R @Model.EntryFee.ToString("N2")
+        </p>
+
+        <p>
+            <strong>Maximum participants:</strong>
+            @Model.MaxParticipants
+        </p>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            Back to Events
+        </a>
+
+        @if (Context.Session.GetString("Role") == "Participant")
+        {
+            <a asp-controller="Participant"
+               asp-action="Enroll"
+               asp-route-id="@Model.EventID"
+               class="btn btn-success">
+                Enrol Now
+            </a>
+        }
+    </div>
+</div>

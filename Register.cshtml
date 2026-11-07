@@ -1,0 +1,83 @@
+﻿@model RaceDayMvc.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-7 col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h2 class="text-center mb-4">Create a RaceDay Account</h2>
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"></div>
+
+                <form asp-controller="Auth"
+                      asp-action="Register"
+                      method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label asp-for="FullName"
+                               class="form-label"></label>
+                        <input asp-for="FullName"
+                               class="form-control"
+                               autocomplete="name" />
+                        <span asp-validation-for="FullName"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email"
+                               class="form-label"></label>
+                        <input asp-for="Email"
+                               class="form-control"
+                               autocomplete="email" />
+                        <span asp-validation-for="Email"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password"
+                               class="form-label"></label>
+                        <input asp-for="Password"
+                               class="form-control"
+                               autocomplete="new-password" />
+                        <span asp-validation-for="Password"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ConfirmPassword"
+                               class="form-label"></label>
+                        <input asp-for="ConfirmPassword"
+                               class="form-control"
+                               autocomplete="new-password" />
+                        <span asp-validation-for="ConfirmPassword"
+                              class="text-danger"></span>
+                    </div>
+
+                    <p class="text-muted small">
+                        Public registration creates a participant account.
+                    </p>
+
+                    <button type="submit"
+                            class="btn btn-success w-100">
+                        Create Account
+                    </button>
+                </form>
+
+                <p class="text-center mt-3 mb-0">
+                    Already registered?
+                    <a asp-controller="Auth"
+                       asp-action="Login">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

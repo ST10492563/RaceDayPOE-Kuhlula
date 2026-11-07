@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Upload Event Banner";
+}
+
+<h2>Upload Event Banner</h2>
+
+<p class="text-muted">
+    Upload an event banner image to Azure Blob Storage.
+    Supported formats: JPG, JPEG, PNG and WEBP. Maximum size: 5 MB.
+</p>
+
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.Success
+    </div>
+}
+
+<div asp-validation-summary="All"
+     class="text-danger mb-3"></div>
+
+<form asp-controller="Banner"
+      asp-action="Upload"
+      method="post"
+      enctype="multipart/form-data">
+
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label for="image" class="form-label">
+            Select Banner Image
+        </label>
+
+        <input type="file"
+               name="image"
+               id="image"
+               class="form-control"
+               accept=".jpg,.jpeg,.png,.webp"
+               required />
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Upload Banner
+    </button>
+</form>
+
+@if (ViewBag.ImageUrl != null)
+{
+    <hr />
+
+    <h4>Uploaded Image</h4>
+
+    <img src="@ViewBag.ImageUrl"
+         alt="Uploaded event banner"
+         class="img-fluid rounded shadow"
+         style="max-width: 600px;" />
+
+    <p class="mt-3">
+        <strong>Blob URL:</strong>
+        <a href="@ViewBag.ImageUrl" target="_blank">
+            View uploaded image
+        </a>
+    </p>
+}

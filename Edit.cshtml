@@ -1,0 +1,27 @@
+﻿@model RaceDayMvc.Models.EventViewModel
+
+@{
+    ViewData["Title"] = "Edit Event";
+}
+
+<h2>Edit Event</h2>
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+        <form asp-action="Edit"
+              asp-route-id="@Model.EventID"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden"
+                   asp-for="EventID" />
+
+            <partial name="_EventForm" model="Model" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
